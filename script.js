@@ -24,7 +24,6 @@ function renderMatches(matches) {
         row.className = 'match-row';
         
         row.innerHTML = `
-            <td>${match.Pekan || '-'}</td>
             <td>${formatDate(match.Tanggal)}</td>
             <td>${match.Waktu || '-'}</td>
             <td>
