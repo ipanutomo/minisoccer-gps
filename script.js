@@ -32,7 +32,7 @@ function renderMatches(matches) {
             <td>${match.Waktu || '-'}</td>
             <td><span class="badge group-badge bg-primary">Group ${match.Group}</span></td>
             <td class="team-name text-end">${match['Team 1'] || '-'}</td>
-            <td class="score text-center">${match['Skor 1'] || '-'} : ${match['Skor 2'] || '-'}</td>
+            <td class="score text-center">${match['Skor 1'] || '0'} : ${match['Skor 2'] || '0'}</td>
             <td class="team-name">${match['Team 2'] || '-'}</td>
         </tr>
     `).join('');
