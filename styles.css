@@ -85,11 +85,11 @@ body {
 }
 
 .standings-table th {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .standings-table td {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
 }
 
 .tournament-info h5 {
@@ -124,7 +124,7 @@ footer i:hover {
     
     .table th, .table td {
         padding: 0.5rem;
-        font-size: 0.85rem;
+        font-size: 0.65rem;
     }
 }
 
