@@ -2,6 +2,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
+    font-size: 0.9rem; /* Ukuran font dasar diperkecil */
 }
 
 .soccer-header {
@@ -12,21 +13,23 @@ body {
 
 .soccer-header h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 2.2rem; /* Diperkecil dari ukuran default display-4 */
 }
 
 .soccer-header h2 {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-size: 1.4rem; /* Diperkecil */
 }
 
 .soccer-ball {
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 50px; /* Diperkecil */
+    height: 50px; /* Diperkecil */
     margin: 0 auto;
 }
 
 .soccer-ball .bi-circle-fill {
-    font-size: 60px;
+    font-size: 50px; /* Diperkecil */
     color: white;
     position: absolute;
     top: 0;
@@ -34,11 +37,11 @@ body {
 }
 
 .soccer-ball .bi-pentagon {
-    font-size: 50px;
+    font-size: 42px; /* Diperkecil */
     color: black;
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: 4px; /* Disesuaikan */
+    left: 4px; /* Disesuaikan */
     opacity: 0.2;
 }
 
@@ -51,10 +54,21 @@ body {
 .card-header {
     font-weight: 600;
     border-bottom: none;
+    font-size: 1rem; /* Ukuran font header card diperkecil */
+    padding: 0.75rem 1.25rem; /* Padding diperkecil */
+}
+
+.table {
+    font-size: 0.8rem; /* Ukuran font tabel diperkecil */
 }
 
 .table th {
     font-weight: 600;
+    padding: 0.5rem; /* Padding header tabel diperkecil */
+}
+
+.table td {
+    padding: 0.5rem; /* Padding cell tabel diperkecil */
 }
 
 .match-row {
@@ -75,8 +89,13 @@ body {
 }
 
 .group-badge {
-    font-size: 0.8rem;
-    padding: 0.35em 0.65em;
+    font-size: 0.7rem; /* Diperkecil */
+    padding: 0.3em 0.6em; /* Padding diperkecil */
+}
+
+.accordion-button {
+    font-size: 0.9rem; /* Ukuran font accordion diperkecil */
+    padding: 0.75rem 1.25rem; /* Padding accordion diperkecil */
 }
 
 .accordion-button:not(.collapsed) {
@@ -84,25 +103,30 @@ body {
     color: #0d6efd;
 }
 
-.standings-table th {
-    font-size: 0.7rem;
-}
-
+.standings-table th,
 .standings-table td {
-    font-size: 0.7rem;
+    font-size: 0.75rem; /* Diperbesar sedikit dari 0.7rem */
+    padding: 0.4rem 0.5rem; /* Padding disesuaikan */
 }
 
 .tournament-info h5 {
     color: #0d6efd;
     font-weight: 600;
+    font-size: 0.95rem; /* Diperkecil */
+}
+
+.tournament-info p, 
+.tournament-info li {
+    font-size: 0.85rem; /* Diperkecil */
 }
 
 footer {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    font-size: 0.85rem; /* Diperkecil */
 }
 
 footer i {
-    font-size: 1.5rem;
+    font-size: 1.25rem; /* Diperkecil dari 1.5rem */
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -115,33 +139,31 @@ footer i:hover {
 /* Responsive adjustments */
 @media (max-width: 968px) {
     .soccer-header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem; /* Diperkecil */
     }
     
     .soccer-header h2 {
-        font-size: 1.25rem;
+        font-size: 1.1rem; /* Diperkecil */
     }
     
-    .table th, .table td {
-        padding: 0.5rem;
-        font-size: 0.65rem;
+    .table th, 
+    .table td {
+        padding: 0.4rem; /* Diperkecil */
+        font-size: 0.7rem; /* Diperbesar sedikit dari 0.65rem */
+    }
+    
+    .card-header {
+        font-size: 0.9rem; /* Diperkecil untuk mobile */
     }
 }
 
-/* Top Scorers Specific Styles */
-#topScorersSummary th {
-    background-color: rgba(255, 193, 7, 0.2);
+/* Penyesuaian untuk tabel Top Scorers */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02); /* Efek hover lebih subtle */
 }
 
-#topScorersDetail th {
-    background-color: rgba(255, 193, 7, 0.1);
-}
-
-#topScorersAccordion .accordion-button:not(.collapsed) {
+/* Perbaikan typo pada selector accordion */
+.accordion-button:not(.collapsed) {
     background-color: rgba(255, 193, 7, 0.1);
     color: #ffc107;
-}
-
-#topScorersAccordion .accordion-button {
-    font-weight: 500;
 }
