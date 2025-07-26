@@ -1,6 +1,6 @@
 // Configuration
 const API_URL = "https://script.google.com/macros/s/AKfycbx9P4v0rcmcNgdaInqtGSB-Mo0ldfWWDTpdR-x26ec7ept-YXivAaA7yuZkh6To6Do4/exec";
-
+const TOP_SCORERS_API_URL = "https://script.google.com/macros/s/AKfycbyfRoUclJoA7lFVmkToxEdAE3F6n4zVpG1wwnvBpmhwHV9WR9SAUS2N2HDFS0Mq3gMtKw/exec";
 // DOM Elements
 const matchTableBody = document.getElementById('matchData');
 const groupAccordion = document.getElementById('groupAccordion');
@@ -182,25 +182,48 @@ function calculateStandings(matches) {
 /* ========== API HANDLING ========== */
 
 // Fetch data from API
+// Fetch data from API
 async function fetchData() {
     try {
+        // Tampilkan loading state
         matchTableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4">Memuat data...</td></tr>';
+        document.getElementById('topScorersSummaryData').innerHTML = '<tr><td colspan="3" class="text-center py-4">Memuat data...</td></tr>';
         
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error(`Error HTTP! Status: ${response.status}`);
+        // Gunakan Promise.all untuk fetch kedua API sekaligus
+        const [matchesResponse, scorersResponse] = await Promise.all([
+            fetch(API_URL),
+            fetch(TOP_SCORERS_API_URL)
+        ]);
         
-        const data = await response.json();
-        if (!Array.isArray(data)) throw new Error("Format data tidak valid");
+        // Handle response matches
+        if (!matchesResponse.ok) throw new Error(`Error HTTP! Status: ${matchesResponse.status}`);
+        const matchesData = await matchesResponse.json();
+        if (!Array.isArray(matchesData)) throw new Error("Format data pertandingan tidak valid");
         
-        const standings = calculateStandings(data);
-        renderMatches(data);
+        // Handle response scorers
+        if (!scorersResponse.ok) throw new Error(`Error HTTP Top Scorers! Status: ${scorersResponse.status}`);
+        const scorersData = await scorersResponse.json();
+        
+        // Proses dan render data
+        const standings = calculateStandings(matchesData);
+        renderMatches(matchesData);
         renderStandings(standings);
+        renderTopScorers(scorersData);
         
     } catch (error) {
         console.error('Gagal memuat data:', error);
+        
+        // Error handling untuk match table
         matchTableBody.innerHTML = `
             <tr><td colspan="6" class="text-center py-4 text-danger">
-                Gagal memuat data. Silakan coba lagi nanti.
+                Gagal memuat data pertandingan. Silakan coba lagi nanti.
+            </td></tr>
+        `;
+        
+        // Error handling untuk top scorers
+        document.getElementById('topScorersSummaryData').innerHTML = `
+            <tr><td colspan="3" class="text-center py-4 text-danger">
+                Gagal memuat data top scorers. Error: ${error.message}
             </td></tr>
         `;
     }
@@ -220,3 +243,65 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 });
+
+// Fungsi untuk memproses data top scorers
+function processTopScorers(scorers) {
+    if (!scorers || scorers.length === 0) return { summary: [], detail: [] };
+    
+    // Hitung total gol per pemain
+    const playerStats = {};
+    scorers.forEach(scorer => {
+        const key = `${scorer.nama}|${scorer.team}`;
+        if (!playerStats[key]) {
+            playerStats[key] = {
+                nama: scorer.nama,
+                team: scorer.team,
+                total: 0,
+                goals: []
+            };
+        }
+        playerStats[key].total++;
+        playerStats[key].goals.push(scorer);
+    });
+    
+    // Buat array summary dan urutkan berdasarkan total gol
+    const summary = Object.values(playerStats)
+        .sort((a, b) => b.total - a.total || a.nama.localeCompare(b.nama));
+    
+    return {
+        summary,
+        detail: scorers.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal))
+    };
+}
+
+// Fungsi untuk render top scorers
+function renderTopScorers(scorers) {
+    const processed = processTopScorers(scorers);
+    const summaryElement = document.getElementById('topScorersSummaryData');
+    const detailElement = document.getElementById('topScorersDetailData');
+    
+    if (processed.summary.length === 0) {
+        summaryElement.innerHTML = '<tr><td colspan="3" class="text-center py-4">Tidak ada data top scorers</td></tr>';
+        detailElement.innerHTML = '<tr><td colspan="4" class="text-center py-4">Tidak ada data detail gol</td></tr>';
+        return;
+    }
+    
+    // Render summary
+    summaryElement.innerHTML = processed.summary.map(player => `
+        <tr>
+            <td><strong>${player.nama}</strong></td>
+            <td>${player.team}</td>
+            <td><span class="badge bg-danger">${player.total} Gol</span></td>
+        </tr>
+    `).join('');
+    
+    // Render detail
+    detailElement.innerHTML = processed.detail.map(goal => `
+        <tr>
+            <td>${formatDate(goal.tanggal)}</td>
+            <td>${goal.team}</td>
+            <td>${goal.nama}</td>
+            <td>${goal.keterangan || '-'}</td>
+        </tr>
+    `).join('');
+}
