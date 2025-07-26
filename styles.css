@@ -127,3 +127,21 @@ footer i:hover {
         font-size: 0.85rem;
     }
 }
+
+/* Top Scorers Specific Styles */
+#topScorersSummary th {
+    background-color: rgba(255, 193, 7, 0.2);
+}
+
+#topScorersDetail th {
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+#topScorersAccordion .accordion-button:not(.collapsed) {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+#topScorersAccordion .accordion-button {
+    font-weight: 500;
+}
