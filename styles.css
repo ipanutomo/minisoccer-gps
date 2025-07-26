@@ -167,3 +167,92 @@ footer i:hover {
     background-color: rgba(255, 193, 7, 0.1);
     color: #ffc107;
 }
+
+/* Tambahkan/modifikasi rule berikut di CSS Anda */
+
+.container {
+    max-width: 100%; /* Membuat container lebih lebar */
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.card-body {
+    padding: 0; /* Menghilangkan padding card body untuk tabel lebih lebar */
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table {
+    width: 100%; /* Pastikan tabel memenuhi container */
+    min-width: 800px; /* Lebar minimum tabel */
+    margin-bottom: 0; /* Hilangkan margin bawah */
+}
+
+/* Untuk tabel di dalam accordion */
+.accordion-body .table {
+    min-width: 100%; /* Lebar penuh untuk tabel dalam accordion */
+}
+
+/* Penyesuaian kolom untuk tabel pertandingan */
+#matchTable th:nth-child(1),
+#matchTable td:nth-child(1) {
+    width: 15%; /* Lebar kolom Tanggal */
+}
+
+#matchTable th:nth-child(2),
+#matchTable td:nth-child(2) {
+    width: 10%; /* Lebar kolom Waktu */
+}
+
+#matchTable th:nth-child(3),
+#matchTable td:nth-child(3) {
+    width: 10%; /* Lebar kolom Group */
+}
+
+#matchTable th:nth-child(4),
+#matchTable td:nth-child(4),
+#matchTable th:nth-child(6),
+#matchTable td:nth-child(6) {
+    width: 25%; /* Lebar kolom Team */
+}
+
+#matchTable th:nth-child(5),
+#matchTable td:nth-child(5) {
+    width: 15%; /* Lebar kolom Skor */
+}
+
+/* Untuk tabel klasemen */
+.standings-table th,
+.standings-table td {
+    white-space: nowrap; /* Mencegah text wrapping */
+    padding: 8px 12px; /* Padding yang lebih besar */
+}
+
+/* Untuk tabel top scorers */
+#topScorersSummary th,
+#topScorersSummary td,
+#topScorersDetail th,
+#topScorersDetail td {
+    padding: 8px 12px; /* Padding yang konsisten */
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container {
+        max-width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .table {
+        min-width: 100%; /* Di mobile, tabel mengikuti lebar layar */
+    }
+    
+    .table th,
+    .table td {
+        padding: 6px 8px; /* Padding lebih kecil di mobile */
+    }
+}
