@@ -103,7 +103,7 @@ function calculateStandings(matches) {
     const teamGroups = {
         'A': ['RT 1', 'RT 7', 'RT 8', 'RT 9', 'RT 10', 'RT 11'],
         'B': ['RT 2', 'RT 3', 'RT 4', 'RT 5', 'RT 6', 'RT 12'],
-        1: ['RT 8','RT 5','RT 11','RT 6]
+        1: ['RT 8','RT 5','RT 11','RT 6']
     };
 
     const standings = {};
