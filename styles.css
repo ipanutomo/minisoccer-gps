@@ -59,7 +59,10 @@ body {
 }
 
 .table {
-    font-size: 0.8rem; /* Ukuran font tabel diperkecil */
+    width: 100%;
+    min-width: unset; /* biarkan tabel menyesuaikan layar */
+    word-wrap: break-word; /* teks panjang otomatis pindah baris */
+    white-space: normal; /* izinkan teks wrap */
 }
 
 .table th {
@@ -137,10 +140,13 @@ footer i:hover {
 }
 
 /* Responsive adjustments */
-@media (max-width: 968px) {
-    .soccer-header h1 {
-        font-size: 1.8rem; /* Diperkecil */
+@media (max-width: 768px) {
+    .table th,
+    .table td {
+        font-size: 0.7rem;
+        padding: 4px 6px;
     }
+
     
     .soccer-header h2 {
         font-size: 1.1rem; /* Diperkecil */
@@ -180,10 +186,11 @@ footer i:hover {
     padding: 0; /* Menghilangkan padding card body untuk tabel lebih lebar */
 }
 
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
+/* Supaya tabel bisa scroll horizontal kalau terlalu lebar */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 
 .table {
     width: 100%; /* Pastikan tabel memenuhi container */
