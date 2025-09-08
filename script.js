@@ -306,3 +306,19 @@ function renderTopScorers(scorers) {
         </tr>
     `).join('');
 }
+
+function downloadPDF() {
+  // Ambil elemen utama yang mau dijadikan PDF
+  const element = document.querySelector('main');
+
+  const opt = {
+    margin:       0.5,
+    filename:     'mini-soccer-u12.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+
+  // Panggil html2pdf
+  html2pdf().set(opt).from(element).save();
+}
