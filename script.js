@@ -302,25 +302,32 @@ function renderStandings(matches) {
         return;
     }
 
-    let html = '';
-    groups.forEach(group => {
+    // Buat accordion untuk klasemen
+    let html = `<div class="accordion" id="standingsAccordion">`;
+
+    groups.forEach((group, index) => {
         const teams = standings[group];
+        const isFirst = index === 0;
+
         html += `
-                    <div style="margin-bottom: 1.2rem;">
-                        <div style="font-weight:700; font-size:1rem; background:var(--kuning); padding:0.4rem 1rem; border-radius:40px 40px 0 0; display:inline-block; color:var(--teks);">
-                            Group ${group}
-                        </div>
-                        <div class="table-wrap">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="team-nama">Team</th>
-                                        <th>P</th><th>W</th><th>D</th><th>L</th>
-                                        <th>GF</th><th>GA</th><th>GD</th><th>Pts</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                        `;
+            <div class="accordion-item">
+                <button class="accordion-header ${isFirst ? 'open' : ''}" onclick="toggleAccordion(this)">
+                    <span>🏆 Group ${group}</span>
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="accordion-body ${isFirst ? 'open' : ''}">
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="team-nama">Team</th>
+                                    <th>P</th><th>W</th><th>D</th><th>L</th>
+                                    <th>GF</th><th>GA</th><th>GD</th><th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
         teams.forEach(t => {
             const gdClass = t.gd > 0 ? 'gd-positif' : (t.gd < 0 ? 'gd-negatif' : '');
             html += `
@@ -337,12 +344,19 @@ function renderStandings(matches) {
                             </tr>
                         `;
         });
-        html += `</tbody></table></div></div>`;
+
+        html += `
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        `;
     });
 
+    html += `</div>`;
     standingsContainer.innerHTML = html;
 }
-
 // ================================================================
 //  RENDER: TOP SCORERS
 // ================================================================
