@@ -6,15 +6,15 @@
 }
 
 :root {
-    --sage: #005A3C;      /* hijau tua */
-    --krem: #FFFFFF;      /* putih */
-    --mint: #00A859;      /* hijau terang */
-    --kuning: #FFB71C;    /* emas */
-    --kuning-tua: #E8960C; /* emas tua */
-    --teks: #1A1A1A;
-    --teks-putih: #FFFFFF;
-    --shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
-    --radius: 16px;
+    --sage: #0B3C26;        /* Hijau tua premium (ala rumput stadion malam hari) */
+    --krem: #F8FAFC;        /* Bukan putih polos, tapi putih keabu-abuan modern agar mata nyaman */
+    --mint: #10B981;        /* Hijau terang/neon yang hidup untuk aksen aktif atau tombol */
+    --kuning: #F59E0B;      /* Emas trofi yang matang dan elegan (bukan kuning pucat) */
+    --kuning-tua: #D97706;  /* Emas tua untuk hover effect atau teks di latar terang */
+    --teks: #0F172A;        /* Hitam pekat modern (Slate 900) agar terlihat profesional */
+    --teks-putih: #FFFFFF;  /* Putih bersih khusus untuk teks di atas warna gelap */
+    --shadow: 0 8px 24px rgba(11, 60, 38, 0.08); /* Shadow halus dengan sedikit tint hijau utama */
+    --radius: 16px;         /* Tetap 16px sesuai bawaanmu, sudah pas dan modern */
     --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
