@@ -6,18 +6,17 @@
 }
 
 :root {
-    --sage: #0B3C26;        /* Hijau tua premium (ala rumput stadion malam hari) */
-    --krem: #F8FAFC;        /* Bukan putih polos, tapi putih keabu-abuan modern agar mata nyaman */
-    --mint: #10B981;        /* Hijau terang/neon yang hidup untuk aksen aktif atau tombol */
-    --kuning: #F59E0B;      /* Emas trofi yang matang dan elegan (bukan kuning pucat) */
-    --kuning-tua: #D97706;  /* Emas tua untuk hover effect atau teks di latar terang */
-    --teks: #0F172A;        /* Hitam pekat modern (Slate 900) agar terlihat profesional */
-    --teks-putih: #FFFFFF;  /* Putih bersih khusus untuk teks di atas warna gelap */
-    --shadow: 0 8px 24px rgba(11, 60, 38, 0.08); /* Shadow halus dengan sedikit tint hijau utama */
-    --radius: 16px;         /* Tetap 16px sesuai bawaanmu, sudah pas dan modern */
+    --sage: #0B3C26;        /* Hijau tua premium (untuk background Header/Sidebar) */
+    --krem: #F8FAFC;        /* Latar belakang utama halaman (putih abu-abu hgih-contrast) */
+    --mint: #10B981;        /* Hijau terang untuk aksen/tombol aktif */
+    --kuning: #F59E0B;      /* Emas untuk badge atau ikon trofi */
+    --kuning-tua: #D97706;  /* Emas tua untuk hover tombol */
+    --teks: #0F172A;        /* Khusus untuk teks di atas latar TERANG (seperti di dalam card/tabel) */
+    --teks-putih: #FFFFFF;  /* Khusus untuk teks di atas latar GELAP (di dalam Header/Sidebar) */
+    --shadow: 0 8px 24px rgba(11, 60, 38, 0.08);
+    --radius: 16px;
     --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
-
 html {
     scroll-behavior: smooth;
 }
