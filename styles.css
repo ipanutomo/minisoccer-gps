@@ -6,17 +6,21 @@
 }
 
 :root {
-    --sage: #0B3C26;        /* Hijau tua premium (untuk background Header/Sidebar) */
-    --krem: #F8FAFC;        /* Latar belakang utama halaman (putih abu-abu hgih-contrast) */
+    --sage: #0B3C26;        /* Hijau tua premium (untuk header/sidebar) */
+    --krem: #F8FAFC;        /* Latar belakang utama (putih keabu-abuan) */
     --mint: #10B981;        /* Hijau terang untuk aksen/tombol aktif */
-    --kuning: #F59E0B;      /* Emas untuk badge atau ikon trofi */
-    --kuning-tua: #D97706;  /* Emas tua untuk hover tombol */
-    --teks: #0F172A;        /* Khusus untuk teks di atas latar TERANG (seperti di dalam card/tabel) */
-    --teks-putih: #FFFFFF;  /* Khusus untuk teks di atas latar GELAP (di dalam Header/Sidebar) */
+    --kuning: #F59E0B;      /* Emas trofi yang hidup */
+    --kuning-tua: #D97706;  /* Emas tua untuk hover */
+    
+    /* SOLUSI KONTRAS: */
+    --teks: #FFFFFF;        /* Diubah jadi PUTIH agar teks di area --sage (header/sidebar) langsung otomatis terang dan kebaca! */
+    --teks-putih: #0F172A;  /* Diubah jadi HITAM MODERN untuk teks di area terang (body/card) */
+    
     --shadow: 0 8px 24px rgba(11, 60, 38, 0.08);
     --radius: 16px;
     --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
+
 html {
     scroll-behavior: smooth;
 }
