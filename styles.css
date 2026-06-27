@@ -6,14 +6,14 @@
 }
 
 :root {
-    --sage: #002D62;      /* biru navy */
-    --krem: #F8F9FA;      /* putih sedikit abu */
-    --mint: #0033A0;      /* biru terang AS */
+    --sage: #005A3C;      /* hijau tua */
+    --krem: #FFFFFF;      /* putih */
+    --mint: #00A859;      /* hijau terang */
     --kuning: #FFB71C;    /* emas */
     --kuning-tua: #E8960C; /* emas tua */
-    --teks: #1A1A2E;
+    --teks: #1A1A1A;
     --teks-putih: #FFFFFF;
-    --shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
     --radius: 16px;
     --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
