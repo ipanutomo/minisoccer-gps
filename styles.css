@@ -13,7 +13,7 @@
     --kuning-tua: #D97706;  /* Emas tua untuk hover */
     
     /* SOLUSI KONTRAS: */
-    --teks: #FFFFFF;        /* Diubah jadi PUTIH agar teks di area --sage (header/sidebar) langsung otomatis terang dan kebaca! */
+    --teks: #1A1A1A;        /* Diubah jadi PUTIH agar teks di area --sage (header/sidebar) langsung otomatis terang dan kebaca! */
     --teks-putih: #0F172A;  /* Diubah jadi HITAM MODERN untuk teks di area terang (body/card) */
     
     --shadow: 0 8px 24px rgba(11, 60, 38, 0.08);
