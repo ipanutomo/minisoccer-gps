@@ -5,6 +5,9 @@ const API_URL =
     "https://script.google.com/macros/s/AKfycbx9P4v0rcmcNgdaInqtGSB-Mo0ldfWWDTpdR-x26ec7ept-YXivAaA7yuZkh6To6Do4/exec";
 const TOP_SCORERS_API_URL =
     "https://script.google.com/macros/s/AKfycbyfRoUclJoA7lFVmkToxEdAE3F6n4zVpG1wwnvBpmhwHV9WR9SAUS2N2HDFS0Mq3gMtKw/exec";
+const PESERTA_API_URL =
+    "https://script.google.com/macros/s/AKfycbyPOl8MLl5-TyVaGWf_nLTtiCVsWZgFLz2lpcN3i0yrw31UwG8GkPwN30McKPvkwc8t/exec";
+
 
 // ================================================================
 //  🔴 KONFIGURASI TIM PER TAHUN (HARDCODE)
@@ -540,10 +543,190 @@ function downloadPDF() {
 document.getElementById('downloadBtn').addEventListener('click', downloadPDF);
 
 // ================================================================
-//  INIT
+//  STATE PESERTA
+// ================================================================
+let allPeserta = [];
+let filteredPeserta = [];
+let activeChip = 'semua';
+
+// ================================================================
+//  DOM REFS PESERTA
+// ================================================================
+const pesertaContainer = document.getElementById('pesertaContainer');
+const searchPesertaInput = document.getElementById('searchPeserta');
+const chipContainer = document.getElementById('chipContainer');
+
+// ================================================================
+//  FUNGSI BANTU: HITUNG USIA
+// ================================================================
+function hitungUsia(tanggalLahir) {
+    if (!tanggalLahir) return '-';
+    const today = new Date();
+    const birth = new Date(tanggalLahir);
+    if (isNaN(birth.getTime())) return '-';
+    let usia = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+        usia--;
+    }
+    return usia;
+}
+
+function formatTanggalIndo(dateStr) {
+    if (!dateStr) return '-';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
+// ================================================================
+//  RENDER PESERTA
+// ================================================================
+function renderPeserta(data) {
+    if (!data || data.length === 0) {
+        pesertaContainer.innerHTML =
+            `<div class="empty-state"><span>📭</span> Belum ada data peserta.</div>`;
+        return;
+    }
+
+    // Group by team
+    const group = {};
+    data.forEach(p => {
+        const team = p.team || 'Tim Tidak Diketahui';
+        if (!group[team]) group[team] = [];
+        group[team].push(p);
+    });
+
+    // Urutkan team berdasarkan nama (RT 1, RT 2, ...)
+    const sortedTeams = Object.keys(group).sort((a, b) => {
+        const numA = parseInt(a.replace(/\D/g,'')) || 0;
+        const numB = parseInt(b.replace(/\D/g,'')) || 0;
+        return numA - numB;
+    });
+
+    let html = `<div class="squad-grid">`;
+    sortedTeams.forEach(team => {
+        const players = group[team];
+        html += `
+            <div class="squad-card">
+                <div class="squad-header">
+                    <span class="team-name"><i class="fas fa-home"></i> ${team}</span>
+                    <span class="player-count">${players.length} pemain</span>
+                </div>
+                <div class="squad-body">
+        `;
+        if (players.length === 0) {
+            html += `<div class="empty-squad">Tidak ada pemain</div>`;
+        } else {
+            // Urutkan pemain berdasarkan nama
+            players.sort((a, b) => (a.nama || '').localeCompare(b.nama || ''));
+            players.forEach(p => {
+                const nama = p.nama || 'Tidak diketahui';
+                const tgl = p.tanggal_lahir || '';
+                const usia = hitungUsia(tgl);
+                const tglFormatted = formatTanggalIndo(tgl);
+                html += `
+                    <div class="squad-player">
+                        <span class="nama"><i class="fas fa-user" style="opacity:0.5;margin-right:0.3rem;"></i>${nama}</span>
+                        <span class="detail">
+                            <span class="tgl">${tglFormatted}</span>
+                            ${usia !== '-' ? `<span class="usia">${usia} th</span>` : ''}
+                        </span>
+                    </div>
+                `;
+            });
+        }
+        html += `
+                </div>
+            </div>
+        `;
+    });
+    html += `</div>`;
+    pesertaContainer.innerHTML = html;
+}
+
+// ================================================================
+//  FILTER PESERTA (chip + search)
+// ================================================================
+function filterPeserta() {
+    const query = searchPesertaInput.value.toLowerCase().trim();
+    let filtered = allPeserta;
+
+    // Filter chip
+    if (activeChip !== 'semua') {
+        filtered = filtered.filter(p => (p.team || '') === activeChip);
+    }
+
+    // Filter search (by nama)
+    if (query !== '') {
+        filtered = filtered.filter(p => (p.nama || '').toLowerCase().includes(query));
+    }
+
+    filteredPeserta = filtered;
+    renderPeserta(filteredPeserta);
+}
+
+// ================================================================
+//  GENERATE CHIP FILTER (dari data peserta)
+// ================================================================
+function generateChips(data) {
+    const teams = new Set();
+    data.forEach(p => {
+        if (p.team) teams.add(p.team);
+    });
+    const sortedTeams = Array.from(teams).sort((a, b) => {
+        const numA = parseInt(a.replace(/\D/g,'')) || 0;
+        const numB = parseInt(b.replace(/\D/g,'')) || 0;
+        return numA - numB;
+    });
+
+    let html = `<button class="chip semua aktif" data-team="semua">Semua Tim</button>`;
+    sortedTeams.forEach(team => {
+        html += `<button class="chip" data-team="${team}">${team}</button>`;
+    });
+    chipContainer.innerHTML = html;
+
+    // Event listener untuk chip
+    chipContainer.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', function() {
+            chipContainer.querySelectorAll('.chip').forEach(c => c.classList.remove('aktif'));
+            this.classList.add('aktif');
+            activeChip = this.dataset.team;
+            filterPeserta();
+        });
+    });
+}
+
+// ================================================================
+//  FETCH DATA PESERTA
+// ================================================================
+async function fetchPeserta() {
+    try {
+        pesertaContainer.innerHTML = `<div class="empty-state"><span>⏳</span> Memuat data peserta...</div>`;
+        const response = await fetch(PESERTA_API_URL);
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const data = await response.json();
+        if (!Array.isArray(data)) throw new Error('Format data peserta tidak valid');
+
+        allPeserta = data;
+        generateChips(allPeserta);
+        filterPeserta(); // tampilkan semua
+    } catch (error) {
+        console.error('Gagal memuat peserta:', error);
+        pesertaContainer.innerHTML =
+            `<div class="empty-state"><span>❌</span> Gagal memuat data peserta. ${error.message}</div>`;
+    }
+}
+
+
+// ================================================================
+//  INIT (GABUNGAN UNTUK SEMUA FITUR)
 // ================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Cek apakah ada tahun yang tersedia
+    // --- 1. CEK KONFIGURASI TAHUN ---
     const availableYears = Object.keys(TEAMS_BY_YEAR).map(Number);
     if (availableYears.length === 0) {
         matchesContainer.innerHTML =
@@ -551,7 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Set default ke tahun terbaru
+    // --- 2. SET TAHUN DEFAULT (terbaru) ---
     const latestYear = Math.max(...availableYears);
     currentYear = latestYear;
     tahunBadge.textContent = currentYear;
@@ -566,5 +749,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- 3. FETCH DATA UTAMA (Jadwal, Klasemen, Top Scorers) ---
     fetchData();
+
+    // --- 4. FETCH DATA PESERTA (BARU) ---
+    fetchPeserta();
+
+    // --- 5. EVENT LISTENER UNTUK SEARCH PESERTA ---
+    const searchInput = document.getElementById('searchPeserta');
+    if (searchInput) {
+        searchInput.addEventListener('input', filterPeserta);
+    }
+
+    // --- 6. (Opsional) TAMBAHKAN LOG LAIN JIKA PERLU ---
+    console.log(`✅ Mini Soccer U-12 siap! Tahun aktif: ${currentYear}`);
 });
