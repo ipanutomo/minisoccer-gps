@@ -583,12 +583,12 @@ function formatTanggalIndo(dateStr) {
 }
 
 // ================================================================
-//  RENDER PESERTA
+//  RENDER PESERTA (ACCORDION PER TIM)
 // ================================================================
 function renderPeserta(data) {
     if (!data || data.length === 0) {
         pesertaContainer.innerHTML =
-            `<div class="empty-state"><span>📭</span> Belum ada data peserta.</div>`;
+            `<div class="empty-state"><span>📭</span> Tidak ada data peserta yang cocok.</div>`;
         return;
     }
 
@@ -600,50 +600,71 @@ function renderPeserta(data) {
         group[team].push(p);
     });
 
-    // Urutkan team berdasarkan nama (RT 1, RT 2, ...)
+    // Urutkan team (RT 1, RT 2, ...)
     const sortedTeams = Object.keys(group).sort((a, b) => {
         const numA = parseInt(a.replace(/\D/g,'')) || 0;
         const numB = parseInt(b.replace(/\D/g,'')) || 0;
         return numA - numB;
     });
 
-    let html = `<div class="squad-grid">`;
-    sortedTeams.forEach(team => {
+    if (sortedTeams.length === 0) {
+        pesertaContainer.innerHTML =
+            `<div class="empty-state"><span>📭</span> Tidak ada data peserta.</div>`;
+        return;
+    }
+
+    // Buat accordion
+    let html = `<div class="accordion" id="pesertaAccordion">`;
+
+    sortedTeams.forEach((team, index) => {
         const players = group[team];
+        const isFirst = index === 0;
+
         html += `
-            <div class="squad-card">
-                <div class="squad-header">
-                    <span class="team-name"><i class="fas fa-home"></i> ${team}</span>
-                    <span class="player-count">${players.length} pemain</span>
-                </div>
-                <div class="squad-body">
+            <div class="accordion-item">
+                <button class="accordion-header ${isFirst ? 'open' : ''}" onclick="toggleAccordion(this)">
+                    <span><i class="fas fa-users" style="margin-right:0.5rem;"></i> ${team} <span style="font-weight:400;opacity:0.6;font-size:0.8rem;">(${players.length} pemain)</span></span>
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="accordion-body ${isFirst ? 'open' : ''}">
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="text-align:left;">Nama</th>
+                                    <th style="text-align:center;">Tanggal Lahir</th>
+                                    <th style="text-align:center;">Usia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
         `;
-        if (players.length === 0) {
-            html += `<div class="empty-squad">Tidak ada pemain</div>`;
-        } else {
-            // Urutkan pemain berdasarkan nama
-            players.sort((a, b) => (a.nama || '').localeCompare(b.nama || ''));
-            players.forEach(p => {
-                const nama = p.nama || 'Tidak diketahui';
-                const tgl = p.tanggal_lahir || '';
-                const usia = hitungUsia(tgl);
-                const tglFormatted = formatTanggalIndo(tgl);
-                html += `
-                    <div class="squad-player">
-                        <span class="nama"><i class="fas fa-user" style="opacity:0.5;margin-right:0.3rem;"></i>${nama}</span>
-                        <span class="detail">
-                            <span class="tgl">${tglFormatted}</span>
-                            ${usia !== '-' ? `<span class="usia">${usia} th</span>` : ''}
-                        </span>
-                    </div>
-                `;
-            });
-        }
+
+        // Urutkan pemain berdasarkan nama
+        players.sort((a, b) => (a.nama || '').localeCompare(b.nama || ''));
+
+        players.forEach(p => {
+            const nama = p.nama || 'Tidak diketahui';
+            const tgl = p.tanggal_lahir || '';
+            const tglFormatted = formatTanggalIndo(tgl);
+            const usia = hitungUsia(tgl);
+            html += `
+                <tr>
+                    <td style="text-align:left;font-weight:500;">${nama}</td>
+                    <td style="text-align:center;">${tglFormatted}</td>
+                    <td style="text-align:center;font-weight:600;">${usia !== '-' ? usia + ' th' : '-'}</td>
+                </tr>
+            `;
+        });
+
         html += `
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         `;
     });
+
     html += `</div>`;
     pesertaContainer.innerHTML = html;
 }
@@ -655,10 +676,12 @@ function filterPeserta() {
     const query = searchPesertaInput.value.toLowerCase().trim();
     let filtered = allPeserta;
 
+    // Filter chip
     if (activeChip !== 'semua') {
         filtered = filtered.filter(p => (p.team || '') === activeChip);
     }
 
+    // Filter search (by nama)
     if (query !== '') {
         filtered = filtered.filter(p => (p.nama || '').toLowerCase().includes(query));
     }
@@ -699,7 +722,7 @@ function generateChips(data) {
 }
 
 // ================================================================
-//  FETCH DATA PESERTA
+//  FETCH DATA PESERTA (sesuai struktur API)
 // ================================================================
 async function fetchPeserta() {
     try {
@@ -708,17 +731,18 @@ async function fetchPeserta() {
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
         const result = await response.json();
 
-        // 🔴 CEK STRUKTUR RESPONSE
+        // Cek struktur response dari API
         if (!result.status) {
             throw new Error(result.message || 'Gagal mengambil data peserta');
         }
-        if (!Array.isArray(result.data)) {
-            throw new Error('Format data peserta tidak valid');
-        }
 
-        allPeserta = result.data; // <-- ambil dari result.data
+        // Data ada di result.data (array)
+        const data = result.data || [];
+        if (!Array.isArray(data)) throw new Error('Format data peserta tidak valid');
+
+        allPeserta = data;
         generateChips(allPeserta);
-        filterPeserta();
+        filterPeserta(); // tampilkan semua
     } catch (error) {
         console.error('Gagal memuat peserta:', error);
         pesertaContainer.innerHTML =
