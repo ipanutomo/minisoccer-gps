@@ -655,12 +655,10 @@ function filterPeserta() {
     const query = searchPesertaInput.value.toLowerCase().trim();
     let filtered = allPeserta;
 
-    // Filter chip
     if (activeChip !== 'semua') {
         filtered = filtered.filter(p => (p.team || '') === activeChip);
     }
 
-    // Filter search (by nama)
     if (query !== '') {
         filtered = filtered.filter(p => (p.nama || '').toLowerCase().includes(query));
     }
@@ -708,12 +706,19 @@ async function fetchPeserta() {
         pesertaContainer.innerHTML = `<div class="empty-state"><span>⏳</span> Memuat data peserta...</div>`;
         const response = await fetch(PESERTA_API_URL);
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-        const data = await response.json();
-        if (!Array.isArray(data)) throw new Error('Format data peserta tidak valid');
+        const result = await response.json();
 
-        allPeserta = data;
+        // 🔴 CEK STRUKTUR RESPONSE
+        if (!result.status) {
+            throw new Error(result.message || 'Gagal mengambil data peserta');
+        }
+        if (!Array.isArray(result.data)) {
+            throw new Error('Format data peserta tidak valid');
+        }
+
+        allPeserta = result.data; // <-- ambil dari result.data
         generateChips(allPeserta);
-        filterPeserta(); // tampilkan semua
+        filterPeserta();
     } catch (error) {
         console.error('Gagal memuat peserta:', error);
         pesertaContainer.innerHTML =
