@@ -561,9 +561,32 @@ const chipContainer = document.getElementById('chipContainer');
 // ================================================================
 function hitungUsia(tanggalLahir) {
     if (!tanggalLahir) return '-';
-    const today = new Date();
-    const birth = new Date(tanggalLahir);
+    // Coba parsing dengan beberapa format
+    let birth = new Date(tanggalLahir);
+    // Jika gagal, coba split manual untuk format MM/DD/YYYY atau DD/MM/YYYY
+    if (isNaN(birth.getTime())) {
+        // coba split dengan / atau -
+        const parts = tanggalLahir.split(/[\/\-]/);
+        if (parts.length === 3) {
+            // Asumsikan MM/DD/YYYY (karena data contoh: 6/20/2017)
+            // Tapi kita coba deteksi: jika bagian pertama > 12, maka itu DD
+            let month, day, year;
+            if (parseInt(parts[0]) > 12) {
+                // DD/MM/YYYY
+                day = parseInt(parts[0]);
+                month = parseInt(parts[1]) - 1;
+                year = parseInt(parts[2]);
+            } else {
+                // MM/DD/YYYY
+                month = parseInt(parts[0]) - 1;
+                day = parseInt(parts[1]);
+                year = parseInt(parts[2]);
+            }
+            birth = new Date(year, month, day);
+        }
+    }
     if (isNaN(birth.getTime())) return '-';
+    const today = new Date();
     let usia = today.getFullYear() - birth.getFullYear();
     const m = today.getMonth() - birth.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
@@ -574,7 +597,24 @@ function hitungUsia(tanggalLahir) {
 
 function formatTanggalIndo(dateStr) {
     if (!dateStr) return '-';
-    const d = new Date(dateStr);
+    let d = new Date(dateStr);
+    if (isNaN(d.getTime())) {
+        // coba manual parse
+        const parts = dateStr.split(/[\/\-]/);
+        if (parts.length === 3) {
+            let month, day, year;
+            if (parseInt(parts[0]) > 12) {
+                day = parseInt(parts[0]);
+                month = parseInt(parts[1]) - 1;
+                year = parseInt(parts[2]);
+            } else {
+                month = parseInt(parts[0]) - 1;
+                day = parseInt(parts[1]);
+                year = parseInt(parts[2]);
+            }
+            d = new Date(year, month, day);
+        }
+    }
     if (isNaN(d.getTime())) return dateStr;
     const day = String(d.getDate()).padStart(2, '0');
     const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -583,12 +623,12 @@ function formatTanggalIndo(dateStr) {
 }
 
 // ================================================================
-//  RENDER PESERTA (ACCORDION PER TIM)
+//  RENDER PESERTA (dengan Accordion per Team)
 // ================================================================
 function renderPeserta(data) {
     if (!data || data.length === 0) {
         pesertaContainer.innerHTML =
-            `<div class="empty-state"><span>📭</span> Tidak ada data peserta yang cocok.</div>`;
+            `<div class="empty-state"><span>📭</span> Belum ada data peserta.</div>`;
         return;
     }
 
@@ -600,30 +640,25 @@ function renderPeserta(data) {
         group[team].push(p);
     });
 
-    // Urutkan team (RT 1, RT 2, ...)
+    // Urutkan team berdasarkan nomor
     const sortedTeams = Object.keys(group).sort((a, b) => {
         const numA = parseInt(a.replace(/\D/g,'')) || 0;
         const numB = parseInt(b.replace(/\D/g,'')) || 0;
         return numA - numB;
     });
 
-    if (sortedTeams.length === 0) {
-        pesertaContainer.innerHTML =
-            `<div class="empty-state"><span>📭</span> Tidak ada data peserta.</div>`;
-        return;
-    }
-
-    // Buat accordion
     let html = `<div class="accordion" id="pesertaAccordion">`;
 
     sortedTeams.forEach((team, index) => {
         const players = group[team];
         const isFirst = index === 0;
+        // Urutkan pemain berdasarkan nama
+        players.sort((a, b) => (a.nama || '').localeCompare(b.nama || ''));
 
         html += `
             <div class="accordion-item">
                 <button class="accordion-header ${isFirst ? 'open' : ''}" onclick="toggleAccordion(this)">
-                    <span><i class="fas fa-users" style="margin-right:0.5rem;"></i> ${team} <span style="font-weight:400;opacity:0.6;font-size:0.8rem;">(${players.length} pemain)</span></span>
+                    <span><i class="fas fa-home"></i> ${team} (${players.length} pemain)</span>
                     <span class="arrow">▾</span>
                 </button>
                 <div class="accordion-body ${isFirst ? 'open' : ''}">
@@ -631,27 +666,24 @@ function renderPeserta(data) {
                         <table>
                             <thead>
                                 <tr>
-                                    <th style="text-align:left;">Nama</th>
-                                    <th style="text-align:center;">Tanggal Lahir</th>
-                                    <th style="text-align:center;">Usia</th>
+                                    <th>Nama</th>
+                                    <th>Tanggal Lahir</th>
+                                    <th>Usia</th>
                                 </tr>
                             </thead>
                             <tbody>
         `;
 
-        // Urutkan pemain berdasarkan nama
-        players.sort((a, b) => (a.nama || '').localeCompare(b.nama || ''));
-
         players.forEach(p => {
             const nama = p.nama || 'Tidak diketahui';
-            const tgl = p.tanggal_lahir || '';
-            const tglFormatted = formatTanggalIndo(tgl);
+            const tgl = p['tanggal lahir'] || p.tanggal_lahir || '';
             const usia = hitungUsia(tgl);
+            const tglFormatted = formatTanggalIndo(tgl);
             html += `
                 <tr>
-                    <td style="text-align:left;font-weight:500;">${nama}</td>
-                    <td style="text-align:center;">${tglFormatted}</td>
-                    <td style="text-align:center;font-weight:600;">${usia !== '-' ? usia + ' th' : '-'}</td>
+                    <td><strong>${nama}</strong></td>
+                    <td>${tglFormatted}</td>
+                    <td>${usia !== '-' ? usia + ' tahun' : '-'}</td>
                 </tr>
             `;
         });
@@ -722,7 +754,7 @@ function generateChips(data) {
 }
 
 // ================================================================
-//  FETCH DATA PESERTA (sesuai struktur API)
+//  FETCH DATA PESERTA (dengan response wrapper)
 // ================================================================
 async function fetchPeserta() {
     try {
@@ -731,14 +763,16 @@ async function fetchPeserta() {
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
         const result = await response.json();
 
-        // Cek struktur response dari API
-        if (!result.status) {
-            throw new Error(result.message || 'Gagal mengambil data peserta');
+        // Cek apakah response berbentuk object dengan properti 'data'
+        let data = [];
+        if (result && result.status === true && Array.isArray(result.data)) {
+            data = result.data;
+        } else if (Array.isArray(result)) {
+            // fallback jika ternyata langsung array
+            data = result;
+        } else {
+            throw new Error('Format data peserta tidak valid');
         }
-
-        // Data ada di result.data (array)
-        const data = result.data || [];
-        if (!Array.isArray(data)) throw new Error('Format data peserta tidak valid');
 
         allPeserta = data;
         generateChips(allPeserta);
@@ -749,7 +783,6 @@ async function fetchPeserta() {
             `<div class="empty-state"><span>❌</span> Gagal memuat data peserta. ${error.message}</div>`;
     }
 }
-
 
 // ================================================================
 //  INIT (GABUNGAN UNTUK SEMUA FITUR)
