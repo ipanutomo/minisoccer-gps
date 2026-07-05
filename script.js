@@ -681,7 +681,7 @@ function renderPeserta(data) {
             const tglFormatted = formatTanggalIndo(tgl);
             html += `
                 <tr>
-                    <td><strong>${nama}</strong></td>
+                    <td style="Text-align: left;"><strong>${nama}</strong></td>
                     <td>${tglFormatted}</td>
                     <td>${usia !== '-' ? usia + ' tahun' : '-'}</td>
                 </tr>
