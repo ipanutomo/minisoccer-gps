@@ -206,7 +206,7 @@ function renderMatches(matches) {
             const s1 = m['Skor 1'] !== undefined && m['Skor 1'] !== '' ? m['Skor 1'] : '0';
             const s2 = m['Skor 2'] !== undefined && m['Skor 2'] !== '' ? m['Skor 2'] : '0';
             const group = m.Group || '-';
-            const waktu = m.Waktu || '-';
+            const waktu = m.Jam || '-';
 
             html += `
                         <div class="match-item">
