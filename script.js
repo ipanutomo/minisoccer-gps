@@ -415,7 +415,7 @@ function renderScorers(scorers) {
                             <tbody>
                                 ${processed.summary.map(p => `
                                     <tr>
-                                        <td><strong>${p.nama}</strong></td>
+                                        <td style="text-align: left;"><strong>${p.nama}</strong></td>
                                         <td>${p.team}</td>
                                         <td><span style="background:var(--kuning); padding:0.1rem 0.7rem; border-radius:30px; font-weight:700;">${p.total}</span></td>
                                     </tr>
