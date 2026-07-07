@@ -365,8 +365,9 @@ section {
     margin-left: auto;
     font-size: 0.8rem;
     background: rgba(34, 197, 94, 0.1);
-    padding: 0.15rem 0.6rem;
+    padding: 0.2rem 0.6rem;
     border-radius: 20px;
+    white-space: nowrap; /* 🔥 FIX: Memaksa teks tetap satu baris lurus */
 }
 
 .match-item {
@@ -656,48 +657,58 @@ section {
    ================================================================ */
 @media (max-width: 640px) {
     .match-item {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 0.6rem;
-        padding: 1rem;
-        position: relative;
+        display: grid;
+        grid-template-columns: 1fr; /* Menggunakan 1 kolom penuh agar susunan turun ke bawah */
+        gap: 0.75rem;
+        padding: 1rem 1.2rem;
     }
 
+    /* Baris Atas: Info Waktu (Kiri) dan Nama Grup (Kanan) */
     .match-time {
         grid-row: 1;
         justify-self: flex-start;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
 
     .match-group {
         grid-row: 1;
         justify-self: flex-end;
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
+        margin-top: 0;
+        /* 🔥 FIX: Menghapus position absolute agar tidak menimpa nama tim di bawahnya */
     }
 
+    /* Baris Bawah: Susunan Tim Kiri - Skor Tengah - Tim Kanan */
     .match-teams {
         grid-row: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         gap: 0.5rem;
-        justify-content: center;
+        width: 100%;
     }
 
     .match-teams .team {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
+        flex: 1;
     }
     
-    .match-teams .team:first-child { text-align: left; }
-    .match-teams .team:last-child { text-align: right; }
+    .match-teams .team:first-child { 
+        text-align: left; 
+    }
+    
+    .match-teams .team:last-child { 
+        text-align: right; 
+    }
 
     .match-teams .score {
         font-size: 0.85rem;
-        padding: 0.15rem 0.6rem;
-        min-width: 46px;
+        padding: 0.2rem 0.6rem;
+        min-width: 48px;
+        flex-shrink: 0;
     }
 
     .match-status {
-        display: none; /* Disembunyikan di mobile agar tetap bersih */
+        display: none;
     }
 }
 
