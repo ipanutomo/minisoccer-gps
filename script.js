@@ -24,13 +24,8 @@ const TEAMS_BY_YEAR = {
         '1': ['RT 8', 'RT 5', 'RT 11', 'RT 6'] // 4 semifinalis
     },
     2026: {
-        'A': [
-            // 🔴 ISI DAFTAR TIM GROUP A 2026 DI SINI
-            // contoh: 'RT 1', 'RT 2', 'RT 3', ...
-        ],
-        'B': [
-            // 🔴 ISI DAFTAR TIM GROUP B 2026 DI SINI
-        ],
+        'A': ['RT 1', 'RT 6', 'RT 8', 'RT 10'],
+        'B': ['RT 5', 'RT 7', 'RT 11', 'RT 12'],
         '1': [
             // 🔴 ISI 4 TIM SEMIFINALIS 2026 DI SINI
             // (bisa diisi setelah penyisihan selesai)
