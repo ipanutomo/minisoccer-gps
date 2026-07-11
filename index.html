@@ -4,15 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
     <title>MINI SOCCER U-12 RW 10</title>
-    <!-- Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <!-- Favicon (emoji) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>" />
-    <!-- CSS utama (tidak diubah) -->
     <link rel="stylesheet" href="styles.css" />
-    <!-- Style tambahan untuk halaman peserta (tidak mengubah file styles.css) -->
     <style>
-        /* ===== PESERTA : SQUAD CARDS ===== */
+        /* ===== PESERTA : SQUAD CARDS & ACCORDION PRESETS ===== */
         .squad-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -20,176 +19,191 @@
             margin-top: 1rem;
         }
         .squad-card {
-            background: white;
-            border-radius: var(--radius, 16px);
-            box-shadow: var(--shadow, 0 8px 24px rgba(11, 60, 38, 0.08));
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
             overflow: hidden;
-            transition: transform 0.15s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .squad-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
         }
         .squad-header {
-            background: var(--mint, #10B981);
-            padding: 0.7rem 1rem;
+            background: var(--gradient-primary);
+            padding: 0.9rem 1.2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--teks, #1A1A1A);
+            color: white;
             font-weight: 600;
-            border-bottom: 2px solid rgba(0,0,0,0.05);
         }
         .squad-header .team-name {
             font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
         .squad-header .player-count {
-            background: rgba(0,0,0,0.15);
-            padding: 0.1rem 0.6rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.6rem;
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
         }
         .squad-body {
-            padding: 0.6rem 0.8rem;
+            padding: 0.8rem 1.2rem;
             max-height: 300px;
             overflow-y: auto;
         }
         .squad-player {
             display: flex;
             justify-content: space-between;
-            padding: 0.3rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.04);
-            font-size: 0.85rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.875rem;
         }
         .squad-player:last-child {
             border-bottom: none;
         }
         .squad-player .nama {
             font-weight: 500;
+            color: var(--text-primary);
         }
         .squad-player .detail {
-            color: #64748b;
+            color: var(--text-secondary);
             font-size: 0.75rem;
             display: flex;
             gap: 0.6rem;
+            align-items: center;
         }
         .squad-player .detail .tgl {
-            opacity: 0.6;
+            opacity: 0.7;
         }
         .squad-player .detail .usia {
-            background: var(--kuning, #F59E0B);
-            padding: 0 0.5rem;
+            background: var(--gradient-accent);
+            color: #0f172a;
+            padding: 0.1rem 0.5rem;
             border-radius: 30px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.7rem;
         }
         .empty-squad {
             text-align: center;
             padding: 1rem 0;
-            color: #94a3b8;
+            color: var(--text-secondary);
             font-size: 0.85rem;
         }
 
-        /* ===== FILTER CHIPS ===== */
+        /* ===== FILTER CHIPS MODERN ===== */
         .filter-section {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 0.6rem 0.8rem;
-            margin: 0.8rem 0 1rem 0;
+            gap: 1rem;
+            margin: 1rem 0 1.5rem 0;
         }
         .filter-section .search-box {
-            flex: 1 1 200px;
+            flex: 1 1 240px;
             display: flex;
             align-items: center;
-            background: white;
-            border-radius: 40px;
-            padding: 0.2rem 0.8rem;
-            box-shadow: var(--shadow, 0 4px 12px rgba(0,0,0,0.04));
-            border: 1px solid #e2e8f0;
+            background: var(--input-bg);
+            border-radius: 8px;
+            padding: 0.3rem 0.75rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        .filter-section .search-box:focus-within {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
         }
         .filter-section .search-box i {
-            color: #94a3b8;
-            margin-right: 0.4rem;
-            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-right: 0.6rem;
+            font-size: 0.95rem;
         }
         .filter-section .search-box input {
             border: none;
             background: transparent;
-            padding: 0.5rem 0;
-            font-size: 0.9rem;
+            padding: 0.2rem 0;
+            font-size: 0.85rem;
             width: 100%;
             outline: none;
             font-family: inherit;
-            color: var(--teks, #1A1A1A);
+            color: var(--text-primary);
         }
         .filter-section .search-box input::placeholder {
-            color: #b0b8c4;
+            color: var(--text-secondary);
+            opacity: 0.6;
         }
         .chip-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
         .chip {
-            background: #f1f5f9;
-            border: none;
-            padding: 0.25rem 0.9rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: #334155;
+            color: var(--text-secondary);
             cursor: pointer;
-            transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
         }
         .chip:active {
-            transform: scale(0.95);
+            transform: scale(0.96);
         }
         .chip.aktif {
-            background: var(--kuning, #F59E0B);
-            color: var(--teks, #1A1A1A);
-            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+            background: var(--gradient-accent);
+            color: #0f172a !important;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
         }
         .chip:hover:not(.aktif) {
-            background: #e2e8f0;
+            background: var(--border-color);
+            color: var(--text-primary);
         }
         .chip.semua {
-            background: var(--mint, #10B981);
-            color: white;
+            background: var(--card-bg);
+            color: var(--primary-light);
+            border-color: rgba(34, 197, 94, 0.3);
         }
         .chip.semua.aktif {
-            background: var(--mint, #10B981);
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+            background: var(--gradient-primary);
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
         }
 
-        /* ===== RESPONSIF ===== */
         @media (max-width: 500px) {
-            .squad-grid {
-                grid-template-columns: 1fr;
-            }
             .filter-section {
                 flex-direction: column;
                 align-items: stretch;
             }
-            .filter-section .search-box {
-                flex: 1;
-            }
             .chip-group {
-                justify-content: center;
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.3rem;
+                flex-wrap: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            .chip {
+                padding: 0.4rem 1rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
     <header class="header" id="header">
         <div class="header-left">
-            <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu">☰</button>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
             <div class="header-title">
                 MINI SOCCER U-12
                 <small>RW 10 GRAND PERMATA SEPATAN</small>
@@ -198,91 +212,81 @@
         <div class="header-right">
             <span class="tahun-badge" id="tahunBadge">2026</span>
             <button class="btn-download" id="downloadBtn">
-                <i class="fas fa-file-pdf"></i> PDF
+                <i class="fas fa-file-pdf"></i> <span>PDF</span>
             </button>
         </div>
     </header>
 
-    <!-- ===== SIDEBAR OVERLAY ===== -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <aside class="sidebar" id="sidebar">
         <button class="sidebar-close" id="sidebarClose">✕</button>
         <div class="sidebar-title">
-            Menu
+            Menu Utama
             <small>MINI SOCCER U-12</small>
         </div>
 
         <div class="sidebar-nav">
-            <div class="label-tahun">Pilih Tahun</div>
-            <a class="tahun-link aktif" data-tahun="2026"><i class="fas fa-calendar-alt"></i> 2026</a>
-            <a class="tahun-link" data-tahun="2025"><i class="fas fa-calendar-alt"></i> 2025</a>
+            <div class="label-tahun">Pilih Tahun Musim</div>
+            <a class="tahun-link aktif" data-tahun="2026"><i class="fas fa-calendar-alt"></i> Musim 2026</a>
+            <a class="tahun-link" data-tahun="2025"><i class="fas fa-calendar-alt"></i> Musim 2025</a>
 
-            <div style="margin-top: 1.2rem; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 1rem;"></div>
-            <a href="#section-matches"><i class="fas fa-futbol"></i> Jadwal</a>
-            <a href="#section-standings"><i class="fas fa-trophy"></i> Klasemen</a>
+            <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;"></div>
+            <a href="#section-matches"><i class="fas fa-futbol"></i> Jadwal Match</a>
+            <a href="#section-standings"><i class="fas fa-trophy"></i> Klasemen Grup</a>
             <a href="#section-scorers"><i class="fas fa-star"></i> Top Scorers</a>
             <a href="#section-peserta"><i class="fas fa-users"></i> Daftar Peserta</a>
         </div>
 
-        <div class="sidebar-footer">© 2026 • RW 10 Grand Permata</div>
+        <div class="sidebar-footer">© 2026 • RT 8 | RW 10 Grand Permata</div>
     </aside>
 
-    <!-- ===== MAIN ===== -->
     <main class="container" id="mainContent">
 
-        <!-- JADWAL -->
         <section id="section-matches">
             <div class="section-title"><i class="fas fa-futbol"></i> Jadwal Pertandingan</div>
             <div id="matchesContainer">
-                <div class="empty-state"><span>⏳</span> Memuat data...</div>
+                <div class="empty-state"><div class="spinner"></div>Memuat data pertandingan...</div>
             </div>
         </section>
 
-        <!-- KLASEMEN -->
         <section id="section-standings">
             <div class="section-title"><i class="fas fa-trophy"></i> Klasemen Grup</div>
             <div id="standingsContainer">
-                <div class="empty-state"><span>⏳</span> Memuat data...</div>
+                <div class="empty-state"><div class="spinner"></div>Memuat data klasemen...</div>
             </div>
         </section>
 
-        <!-- TOP SCORERS -->
         <section id="section-scorers">
             <div class="section-title"><i class="fas fa-star"></i> Top Scorers</div>
             <div id="scorersContainer">
-                <div class="empty-state"><span>⏳</span> Memuat data...</div>
+                <div class="empty-state"><div class="spinner"></div>Memuat data pencetak gol...</div>
             </div>
         </section>
 
-        <!-- ====== DAFTAR PESERTA (BARU) ====== -->
         <section id="section-peserta">
-            <div class="section-title"><i class="fas fa-users"></i> Daftar Peserta</div>
+            <div class="section-title"><i class="fas fa-users"></i> Daftar Susunan Peserta</div>
             
-            <!-- Filter & Search -->
             <div class="filter-section">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="searchPeserta" placeholder="Cari nama peserta..." />
+                    <input type="text" id="searchPeserta" placeholder="Cari nama pemain..." />
                 </div>
                 <div class="chip-group" id="chipContainer">
-                    <!-- chip akan di-generate dari JS -->
-                </div>
+                    </div>
             </div>
 
-            <!-- Container Kartu -->
             <div id="pesertaContainer">
-                <div class="empty-state"><span>⏳</span> Memuat data peserta...</div>
+                <div class="empty-state"><div class="spinner"></div>Memuat susunan skuad...</div>
             </div>
         </section>
 
         <footer class="footer">
-            <strong>MINI SOCCER U-12</strong> · RW 10 Grand Permata Sepatan · © 2026
+            <strong>MINI SOCCER U-12</strong><br>RT 8 | RW 10 Grand Permata Sepatan · © 2026
         </footer>
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
