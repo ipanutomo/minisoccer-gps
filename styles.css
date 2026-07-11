@@ -6,16 +6,13 @@
 }
 
 :root {
-    --sage: #E2E8F0;        /* Hijau tua premium (untuk header/sidebar) */
-    --krem: #F8FAFC;        /* Latar belakang utama (putih keabu-abuan) */
-    --mint: #10B981;        /* Hijau terang untuk aksen/tombol aktif */
-    --kuning: #F59E0B;      /* Emas trofi yang hidup */
-    --kuning-tua: #D97706;  /* Emas tua untuk hover */
-    
-    /* SOLUSI KONTRAS: */
-    --teks: #1A1A1A;        /* Diubah jadi PUTIH agar teks di area --sage (header/sidebar) langsung otomatis terang dan kebaca! */
-    --teks-putih: #0F172A;  /* Diubah jadi HITAM MODERN untuk teks di area terang (body/card) */
-    
+    --sage: #E2E8F0;
+    --krem: #F8FAFC;
+    --mint: #10B981;
+    --kuning: #F59E0B;
+    --kuning-tua: #D97706;
+    --teks: #1A1A1A;
+    --teks-putih: #0F172A;
     --shadow: 0 8px 24px rgba(11, 60, 38, 0.08);
     --radius: 16px;
     --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -318,33 +315,34 @@ section {
     white-space: nowrap;
 }
 
+/* PERBAIKAN 1: Nama tim di HP jadi rapi & tidak memanjang */
 .match-teams {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.3rem;
     flex: 1 1 auto;
     font-weight: 500;
-    font-size: 0.85rem;
-    min-width: 140px;
+    font-size: 0.8rem;
+    min-width: 120px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .match-teams .team {
     white-space: nowrap;
-}
-.match-teams .vs {
-    font-weight: 300;
-    opacity: 0.3;
-    font-size: 0.7rem;
-    margin: 0 0.1rem;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .match-teams .score {
     font-weight: 700;
     color: var(--teks);
     background: var(--kuning);
-    padding: 0 0.5rem;
+    padding: 0 0.4rem;
     border-radius: 30px;
-    font-size: 0.8rem;
-    min-width: 36px;
+    font-size: 0.75rem;
+    min-width: 32px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .match-status {
@@ -354,7 +352,7 @@ section {
     white-space: nowrap;
 }
 
-/* ===== KLASEMEN ===== */
+/* ===== KLASEMEN - COMPACT UNTUK HP ===== */
 .table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -366,16 +364,16 @@ section {
 
 .table-wrap table {
     width: 100%;
-    min-width: 520px;
+    min-width: 380px;
     border-collapse: collapse;
-    font-size: 0.78rem;
+    font-size: 0.7rem;
 }
 
 .table-wrap th {
     background: var(--sage);
     color: var(--teks);
     font-weight: 600;
-    padding: 0.55rem 0.5rem;
+    padding: 0.4rem 0.3rem;
     text-align: center;
     white-space: nowrap;
     position: sticky;
@@ -384,7 +382,7 @@ section {
 }
 
 .table-wrap td {
-    padding: 0.45rem 0.5rem;
+    padding: 0.35rem 0.3rem;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     white-space: nowrap;
@@ -393,8 +391,12 @@ section {
 .table-wrap .team-nama {
     text-align: left;
     font-weight: 500;
-    padding-left: 0.8rem;
-    min-width: 80px;
+    padding-left: 0.5rem;
+    min-width: 60px;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.65rem;
 }
 
 .table-wrap .poin {
@@ -474,8 +476,8 @@ section {
     background: transparent;
 }
 .accordion-body .table-wrap table {
-    min-width: 380px;
-    font-size: 0.75rem;
+    min-width: 320px;
+    font-size: 0.7rem;
 }
 .accordion-body .table-wrap th {
     background: var(--kuning);
@@ -527,19 +529,25 @@ section {
         gap: 0.8rem;
     }
     .match-teams {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+    }
+    .match-teams .team {
+        max-width: 120px;
     }
     .match-time {
         font-size: 0.8rem;
         min-width: 60px;
     }
     .table-wrap table {
-        font-size: 0.85rem;
-        min-width: 600px;
+        font-size: 0.78rem;
+        min-width: 520px;
     }
     .table-wrap th,
     .table-wrap td {
-        padding: 0.6rem 0.7rem;
+        padding: 0.5rem 0.6rem;
+    }
+    .table-wrap .team-nama {
+        font-size: 0.75rem;
     }
 }
 
