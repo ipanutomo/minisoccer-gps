@@ -252,49 +252,55 @@ body {
 }
 
 /* ================================================================
-   🔍 4. SEARCH & FILTER SECTION (Compact & Rapi)
+   🔍 4. SEARCH & FILTER SECTION (Tidak melebihi layar)
    ================================================================ */
 .filter-section {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.6rem;
     margin-bottom: 1.25rem;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
 }
 
 .filter-section .search-box {
     flex: 1 1 200px;
+    min-width: 140px;
+    max-width: 100%;
     display: flex;
     align-items: center;
     background: var(--input-bg);
     border-radius: var(--radius-md);
-    padding: 0.2rem 0.75rem;
+    padding: 0.25rem 0.8rem;
     border: 1px solid var(--border-color);
-    height: 36px;
-    min-height: 36px;
+    height: 40px;
+    min-height: 40px;
 }
 
 .filter-section .search-box i {
     color: var(--text-secondary);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     margin-right: 0.5rem;
+    flex-shrink: 0;
 }
 
 .filter-section .search-box input {
     border: none;
     background: transparent;
     padding: 0.15rem 0;
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     width: 100%;
+    min-width: 0;
     outline: none;
     color: var(--text-primary);
-    height: 30px;
+    height: 32px;
 }
 
 .filter-section .search-box input::placeholder {
     color: var(--text-secondary);
     opacity: 0.6;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
 }
 
 .chip-group {
@@ -304,6 +310,7 @@ body {
     scrollbar-width: none;
     padding: 0.2rem 0;
     flex: 1 1 auto;
+    max-width: 100%;
 }
 
 .chip-group::-webkit-scrollbar {
@@ -314,16 +321,17 @@ body {
     background: var(--input-bg);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
-    padding: 0.2rem 0.7rem;
+    padding: 0.25rem 0.8rem;
     border-radius: 20px;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
-    height: 28px;
+    height: 30px;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .chip.aktif {
@@ -366,7 +374,6 @@ section {
     color: var(--primary);
 }
 
-/* CARD PERTANDINGAN - Desain Keren */
 .match-day {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
@@ -392,7 +399,7 @@ section {
 
 .match-day-header .date {
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -415,7 +422,7 @@ section {
 .match-item {
     display: flex;
     align-items: center;
-    padding: 0.6rem 1rem;
+    padding: 0.7rem 1rem;
     border-bottom: 1px solid rgba(51, 65, 85, 0.2);
     transition: background 0.2s;
 }
@@ -429,17 +436,17 @@ section {
 }
 
 .match-time {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    min-width: 70px;
+    min-width: 80px;
     font-weight: 500;
 }
 
 .match-group-badge {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     background: rgba(245, 158, 11, 0.15);
     color: var(--accent);
-    padding: 0.15rem 0.5rem;
+    padding: 0.15rem 0.6rem;
     border-radius: 12px;
     font-weight: 700;
     border: 1px solid rgba(245, 158, 11, 0.2);
@@ -451,16 +458,16 @@ section {
     align-items: center;
     flex: 1;
     justify-content: center;
-    gap: 0.75rem;
+    gap: 0.8rem;
 }
 
 .match-teams .team {
-    font-size: 0.85rem;
+    font-size: 0.92rem;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 120px;
+    max-width: 150px;
 }
 
 .match-teams .team:first-child {
@@ -471,11 +478,11 @@ section {
     background: var(--gradient-accent);
     color: #0f172a;
     font-weight: 700;
-    padding: 0.15rem 0.6rem;
+    padding: 0.2rem 0.7rem;
     border-radius: var(--radius-sm);
-    min-width: 40px;
+    min-width: 45px;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
 }
 
@@ -548,7 +555,6 @@ section {
     }
 }
 
-/* TABEL KLASEMEN - COMPACT */
 .table-wrap {
     width: 100%;
     max-width: 100%;
@@ -618,7 +624,6 @@ section {
     color: #ef4444;
 }
 
-/* Kolom Posisi */
 .table-wrap td:first-child,
 .table-wrap th:first-child {
     width: 30px;
@@ -797,18 +802,53 @@ section {
         padding-right: 0.5rem;
     }
 
-    /* Match items - grid layout untuk HP */
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.4rem;
+    }
+
+    .filter-section .search-box {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 100%;
+        height: 38px;
+        min-height: 38px;
+        padding: 0.2rem 0.7rem;
+    }
+
+    .filter-section .search-box input {
+        font-size: 0.85rem;
+        height: 30px;
+    }
+
+    .filter-section .search-box input::placeholder {
+        font-size: 0.8rem;
+    }
+
+    .chip-group {
+        width: 100%;
+        max-width: 100%;
+        gap: 0.3rem;
+    }
+
+    .chip {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.7rem;
+        height: 28px;
+    }
+
     .match-item {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0.2rem 0.5rem;
-        padding: 0.5rem 0.75rem;
+        padding: 0.6rem 0.75rem;
     }
 
     .match-time {
         grid-column: 1;
         grid-row: 1;
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         min-width: auto;
     }
 
@@ -816,7 +856,7 @@ section {
         grid-column: 2;
         grid-row: 1;
         justify-self: end;
-        font-size: 0.55rem;
+        font-size: 0.6rem;
     }
 
     .match-teams {
@@ -825,19 +865,19 @@ section {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 0.3rem;
+        gap: 0.4rem;
         width: 100%;
     }
 
     .match-teams .team {
-        font-size: 0.78rem;
-        max-width: 80px;
+        font-size: 0.88rem;
+        max-width: 100px;
     }
 
     .match-teams .score {
-        font-size: 0.7rem;
-        padding: 0.1rem 0.4rem;
-        min-width: 35px;
+        font-size: 0.78rem;
+        padding: 0.15rem 0.5rem;
+        min-width: 40px;
     }
 
     .match-day-header {
@@ -845,7 +885,7 @@ section {
     }
 
     .match-day-header .date {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
 
     .match-day-header .hari {
@@ -853,26 +893,6 @@ section {
         padding: 0.1rem 0.5rem;
     }
 
-    /* Search box lebih compact */
-    .filter-section .search-box {
-        height: 32px;
-        min-height: 32px;
-        padding: 0.1rem 0.6rem;
-        flex: 1 1 150px;
-    }
-
-    .filter-section .search-box input {
-        font-size: 0.75rem;
-        height: 26px;
-    }
-
-    .chip {
-        font-size: 0.65rem;
-        padding: 0.15rem 0.6rem;
-        height: 26px;
-    }
-
-    /* Tabel klasemen compact */
     .table-wrap table {
         min-width: 350px;
         font-size: 0.65rem;
@@ -898,13 +918,11 @@ section {
         font-size: 0.75rem;
     }
 
-    /* Squad grid */
     .squad-grid {
         grid-template-columns: 1fr;
         gap: 0.75rem;
     }
 
-    /* Accordion header */
     .accordion-header {
         padding: 0.6rem 0.9rem;
         font-size: 0.82rem;
@@ -920,15 +938,40 @@ section {
 }
 
 @media (max-width: 400px) {
+    .filter-section .search-box {
+        height: 36px;
+        min-height: 36px;
+        padding: 0.15rem 0.6rem;
+    }
+
+    .filter-section .search-box input {
+        font-size: 0.8rem;
+        height: 28px;
+    }
+
+    .filter-section .search-box input::placeholder {
+        font-size: 0.75rem;
+    }
+
+    .chip {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.6rem;
+        height: 26px;
+    }
+
     .match-teams .team {
-        max-width: 60px;
-        font-size: 0.7rem;
+        max-width: 75px;
+        font-size: 0.82rem;
     }
 
     .match-teams .score {
-        font-size: 0.65rem;
-        min-width: 30px;
-        padding: 0.05rem 0.3rem;
+        font-size: 0.72rem;
+        min-width: 35px;
+        padding: 0.1rem 0.4rem;
+    }
+
+    .match-time {
+        font-size: 0.7rem;
     }
 
     .table-wrap table {
