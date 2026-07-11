@@ -25,7 +25,7 @@ const TEAMS_BY_YEAR = {
     },
     2026: {
         'A': ['RT 1', 'RT 6', 'RT 8', 'RT 10'],
-        'B': ['RT 5', 'RT 7', 'RT 11', 'RT 12'],
+        'B': ['RT 5', 'RT 7', 'RT 11', 'RT 12', 'RT 2,4'],
         '1': [
             // 🔴 ISI 4 TIM SEMIFINALIS 2026 DI SINI
             // (bisa diisi setelah penyisihan selesai)
