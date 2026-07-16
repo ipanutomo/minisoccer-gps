@@ -438,7 +438,7 @@ function renderScorers(scorers) {
                                     <tr>
                                         <td>${formatDate(d.tanggal)}</td>
                                         <td>${d.team}</td>
-                                        <td><strong>${d.nama}</strong></td>
+                                        <td style="text-align:left;" ><strong>${d.nama}</strong></td>
                                         <td>${d.keterangan || '-'}</td>
                                     </tr>
                                 `).join('')}
