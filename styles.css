@@ -265,15 +265,26 @@ body {
 }
 
 .filter-section .search-box {
-    height: 36px;               ← Fixed height (lebih kecil)
+    display: flex;
+    align-items: center;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    height: 36px;
     min-height: 36px;
-    padding: 0.2rem 0.6rem;     ← Padding berkurang
+    padding: 0 0.6rem;
+    flex: 1 1 200px;
 }
 
 .filter-section .search-box input {
-    padding: 0.1rem 0;          ← Input padding lebih kecil
-    font-size: 0.8rem;          ← Font lebih kecil
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    padding: 0;
+    font-size: 0.8rem;
     height: 100%;
+    width: 100%;
 }
 
 .filter-section .search-box i {
@@ -304,24 +315,18 @@ body {
 }
 
 .chip {
-    height: 32px;               ← Fixed height
+    height: 32px;
     display: flex;
     align-items: center;
-    padding: 0.3rem 1rem;       ← Padding lebih kecil
-    font-size: 0.75rem;         ← Font lebih kecil
-}
-
-@media (max-width: 500px) {
-    .filter-section .search-box {
-        height: 36px;
-        padding: 0.15rem 0.5rem; ← Lebih compact di mobile
-    }
-    
-    .chip {
-        height: 30px;           ← Lebih kecil lagi
-        padding: 0.25rem 0.8rem;
-        font-size: 0.7rem;
-    }
+    justify-content: center;
+    padding: 0 1rem;
+    font-size: 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 .chip.aktif {
@@ -342,21 +347,6 @@ body {
     box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
 
-.filter-section {
-    margin: 1rem 0 1.5rem 0;     ← Margin lebih kecil
-    gap: 1rem;                   ← Gap berkurang
-}
-
-@media (max-width: 500px) {
-    .filter-section {
-        gap: 0.7rem;             ← Gap lebih kecil di mobile
-        margin: 0.75rem 0 1rem 0;
-    }
-    
-    .chip-group {
-        gap: 0.4rem;             ← Chip spacing lebih kecil
-    }
-}
 /* ================================================================
    📅 5. MATCH CONTENT SECTION - PREMIUM CARD DESIGN
    ================================================================ */
@@ -379,7 +369,6 @@ section {
     color: var(--primary);
 }
 
-/* Modifikasi Match-day menjadi bernuansa Premium */
 .match-day {
     background: linear-gradient(145deg, #151f32, #0f172a);
     border-radius: var(--radius-lg);
@@ -392,7 +381,7 @@ section {
 
 .match-day:hover {
     transform: translateY(-3px);
-    border-color: rgba(34, 197, 94, 0.3); /* Glow border tipis hijau */
+    border-color: rgba(34, 197, 94, 0.3);
 }
 
 .match-day-header {
@@ -466,7 +455,6 @@ section {
     letter-spacing: 0.5px;
 }
 
-/* Layout Tim Premium & Seimbang */
 .match-teams {
     display: flex;
     align-items: center;
@@ -493,7 +481,6 @@ section {
     text-align: left;
 }
 
-/* Desain Skor Premium Badge */
 .match-teams .score {
     background: var(--gradient-accent);
     color: #0f172a;
@@ -826,49 +813,46 @@ section {
     .filter-section {
         flex-direction: column;
         align-items: stretch;
-        gap: 0.4rem;             /* Sempitkan jarak antar elemen */
-        margin: 0.5rem 0 0.75rem 0; /* Potong margin luar agar hemat tempat */
+        gap: 0.4rem;
+        margin: 0.5rem 0 0.75rem 0;
     }
 
-    /* Kotak Pencarian Dibuat Tipis & Sleek */
+    /* Memaksa box pencarian menjadi super tipis di layar mobile */
     .filter-section .search-box {
-        width: 100%;
-        height: 32px;            /* ⬅️ Diturunkan drastis agar super tipis */
-        min-height: 32px;
-        padding: 0 0.6rem;
-        border-radius: var(--radius-sm); /* Radius lebih kecil agar tajam & clean */
+        width: 100% !important;
+        height: 30px !important;
+        min-height: 30px !important;
+        padding: 0 0.5rem !important;
+        border-radius: var(--radius-sm);
     }
 
     .filter-section .search-box i {
-        font-size: 0.8rem;       /* Perkecil ikon kaca pembesar */
-        margin-right: 0.4rem;
+        font-size: 0.75rem;
+        margin-right: 0.35rem;
     }
 
     .filter-section .search-box input {
-        font-size: 0.8rem;       /* Perkecil ukuran text input */
+        font-size: 0.78rem;
         height: 100%;
     }
 
     .filter-section .search-box input::placeholder {
-        font-size: 0.78rem;
+        font-size: 0.75rem;
     }
 
-    /* Grup Tombol Filter Kategori */
     .chip-group {
         width: 100%;
-        gap: 0.3rem;             /* Rapatkan jarak antar tombol filter */
+        gap: 0.3rem;
         padding: 0.1rem 0;
     }
 
-    /* Tombol Filter Dibuat Tipis Mengimbangi Search Box */
     .chip {
-        font-size: 0.7rem;
-        padding: 0 0.75rem;
-        height: 28px;            /* ⬅️ Dibuat sangat ringkas */
+        font-size: 0.68rem;
+        padding: 0 0.7rem;
+        height: 26px;
         border-radius: var(--radius-sm);
     }
-}
-    /* Transformasi Grid Mobile Khusus Card Pertandingan Premium */
+
     .match-item {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -976,9 +960,8 @@ section {
 
 @media (max-width: 400px) {
     .filter-section .search-box {
-        height: 30px;            /* ⬅️ Lebih tipis lagi untuk layar sempit */
-        min-height: 30px;
-        padding: 0 0.5rem;
+        height: 28px !important;
+        min-height: 28px !important;
     }
 
     .filter-section .search-box input {
@@ -986,11 +969,11 @@ section {
     }
 
     .chip {
-        font-size: 0.65rem;
-        padding: 0 0.6rem;
-        height: 26px;            /* ⬅️ Imbang dengan search box 30px */
+        font-size: 0.62rem;
+        padding: 0 0.55rem;
+        height: 24px;
     }
-}
+
     .match-teams .team {
         max-width: 80px;
         font-size: 0.85rem;
