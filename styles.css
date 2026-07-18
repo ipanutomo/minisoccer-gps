@@ -265,17 +265,15 @@ body {
 }
 
 .filter-section .search-box {
-    flex: 1 1 200px;
-    min-width: 140px;
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    background: var(--input-bg);
-    border-radius: var(--radius-md);
-    padding: 0.25rem 0.8rem;
-    border: 1px solid var(--border-color);
-    height: 40px;
-    min-height: 40px;
+    height: 36px;               ← Fixed height (lebih kecil)
+    min-height: 36px;
+    padding: 0.2rem 0.6rem;     ← Padding berkurang
+}
+
+.filter-section .search-box input {
+    padding: 0.1rem 0;          ← Input padding lebih kecil
+    font-size: 0.8rem;          ← Font lebih kecil
+    height: 100%;
 }
 
 .filter-section .search-box i {
@@ -283,18 +281,6 @@ body {
     font-size: 0.85rem;
     margin-right: 0.5rem;
     flex-shrink: 0;
-}
-
-.filter-section .search-box input {
-    border: none;
-    background: transparent;
-    padding: 0.15rem 0;
-    font-size: 0.88rem;
-    width: 100%;
-    min-width: 0;
-    outline: none;
-    color: var(--text-primary);
-    height: 32px;
 }
 
 .filter-section .search-box input::placeholder {
@@ -318,20 +304,24 @@ body {
 }
 
 .chip {
-    background: var(--input-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 0.25rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-    height: 30px;
+    height: 32px;               ← Fixed height
     display: flex;
     align-items: center;
-    flex-shrink: 0;
+    padding: 0.3rem 1rem;       ← Padding lebih kecil
+    font-size: 0.75rem;         ← Font lebih kecil
+}
+
+@media (max-width: 500px) {
+    .filter-section .search-box {
+        height: 36px;
+        padding: 0.15rem 0.5rem; ← Lebih compact di mobile
+    }
+    
+    .chip {
+        height: 30px;           ← Lebih kecil lagi
+        padding: 0.25rem 0.8rem;
+        font-size: 0.7rem;
+    }
 }
 
 .chip.aktif {
@@ -352,6 +342,21 @@ body {
     box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
 
+.filter-section {
+    margin: 1rem 0 1.5rem 0;     ← Margin lebih kecil
+    gap: 1rem;                   ← Gap berkurang
+}
+
+@media (max-width: 500px) {
+    .filter-section {
+        gap: 0.7rem;             ← Gap lebih kecil di mobile
+        margin: 0.75rem 0 1rem 0;
+    }
+    
+    .chip-group {
+        gap: 0.4rem;             ← Chip spacing lebih kecil
+    }
+}
 /* ================================================================
    📅 5. MATCH CONTENT SECTION - PREMIUM CARD DESIGN
    ================================================================ */
