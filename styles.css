@@ -826,39 +826,48 @@ section {
     .filter-section {
         flex-direction: column;
         align-items: stretch;
-        gap: 0.4rem;
+        gap: 0.4rem;             /* Sempitkan jarak antar elemen */
+        margin: 0.5rem 0 0.75rem 0; /* Potong margin luar agar hemat tempat */
     }
 
+    /* Kotak Pencarian Dibuat Tipis & Sleek */
     .filter-section .search-box {
-        flex: 1 1 auto;
         width: 100%;
-        max-width: 100%;
-        height: 38px;
-        min-height: 38px;
-        padding: 0.2rem 0.7rem;
+        height: 32px;            /* ⬅️ Diturunkan drastis agar super tipis */
+        min-height: 32px;
+        padding: 0 0.6rem;
+        border-radius: var(--radius-sm); /* Radius lebih kecil agar tajam & clean */
+    }
+
+    .filter-section .search-box i {
+        font-size: 0.8rem;       /* Perkecil ikon kaca pembesar */
+        margin-right: 0.4rem;
     }
 
     .filter-section .search-box input {
-        font-size: 0.85rem;
-        height: 30px;
+        font-size: 0.8rem;       /* Perkecil ukuran text input */
+        height: 100%;
     }
 
     .filter-section .search-box input::placeholder {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
     }
 
+    /* Grup Tombol Filter Kategori */
     .chip-group {
         width: 100%;
-        max-width: 100%;
-        gap: 0.3rem;
+        gap: 0.3rem;             /* Rapatkan jarak antar tombol filter */
+        padding: 0.1rem 0;
     }
 
+    /* Tombol Filter Dibuat Tipis Mengimbangi Search Box */
     .chip {
         font-size: 0.7rem;
-        padding: 0.2rem 0.7rem;
-        height: 28px;
+        padding: 0 0.75rem;
+        height: 28px;            /* ⬅️ Dibuat sangat ringkas */
+        border-radius: var(--radius-sm);
     }
-
+}
     /* Transformasi Grid Mobile Khusus Card Pertandingan Premium */
     .match-item {
         display: grid;
@@ -967,26 +976,21 @@ section {
 
 @media (max-width: 400px) {
     .filter-section .search-box {
-        height: 36px;
-        min-height: 36px;
-        padding: 0.15rem 0.6rem;
+        height: 30px;            /* ⬅️ Lebih tipis lagi untuk layar sempit */
+        min-height: 30px;
+        padding: 0 0.5rem;
     }
 
     .filter-section .search-box input {
-        font-size: 0.8rem;
-        height: 28px;
-    }
-
-    .filter-section .search-box input::placeholder {
         font-size: 0.75rem;
     }
 
     .chip {
         font-size: 0.65rem;
-        padding: 0.15rem 0.6rem;
-        height: 26px;
+        padding: 0 0.6rem;
+        height: 26px;            /* ⬅️ Imbang dengan search box 30px */
     }
-
+}
     .match-teams .team {
         max-width: 80px;
         font-size: 0.85rem;
